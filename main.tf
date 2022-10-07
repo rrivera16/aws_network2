@@ -70,3 +70,14 @@ resource "aws_route_table_association" "public_route_table_association" {
   route_table_id = aws_route_table.public_route_table.id
   subnet_id      = aws_subnet.public_subnet[count.index].id
 }
+
+# Module to deploy basic networking
+module "vpc-dev" {
+ # source              = "../../../modules/aws_network"
+  source              = "git@github.com:rrivera16/aws_network2.git"
+  env                 = var.env
+  vpc_cidr            = var.vpc_cidr
+  private_cidr_blocks = var.public_subnet_cidrs
+  prefix              = var.prefix
+  default_tags        = var.default_tags
+}
